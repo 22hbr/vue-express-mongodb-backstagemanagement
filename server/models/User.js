@@ -10,7 +10,18 @@ const UserScheme = new Scheme({
     type: String,
     require: true
   },
-  time: {
+  email:{
+    type:String,
+    require:true
+  },
+  avatar:{
+    type:String
+  },
+  identity:{
+    type:String,
+    require:true
+  },
+  date: {
     type: Date,
     default: Date.now
   }
