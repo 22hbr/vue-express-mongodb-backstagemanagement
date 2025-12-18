@@ -32,7 +32,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
-import { registerApi,loginApi,searchAllProfiles,getProfileById,addProfile,updateProfile,deleteProfile } from '@/api/api';
+import { registerApi } from '@/api/api';
 import router from '@/router/index';
 
 const registerRef = ref();
@@ -74,27 +74,6 @@ const rules = ref({
   ]
 });
 
-
-// const register = async() => {
-//   registerRef.value.validate((valid) => {
-//     if (valid) {
-//       console.log('注册信息：', registerForm.value);
-//       // 在这里处理注册逻辑，例如发送请求到后端
-//       const res = await register(registerForm.value);
-//       if(res.code == 200){
-//         ElMessage.success('注册成功');
-//         // 跳转到登录页面
-//         router.push('/login');
-//       } else {
-//         ElMessage.error(res.message);
-//       }
-//     } else {
-//       console.log('注册信息验证失败');
-//       return false;
-//     }
-//   });
-// }
-
 const register = async () => {
   try {
     await registerRef.value.validate();
@@ -105,7 +84,6 @@ const register = async () => {
       identity: registerForm.value.identity
     };
     const res = await registerApi(params);
-    console.log(res,'----------------');
     if (res.data.code == 1) {
       ElMessage.success('注册成功');
       router.push('/login');
