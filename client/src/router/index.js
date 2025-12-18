@@ -36,4 +36,19 @@ const router = createRouter({
   routes
 })
 
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+  // 登录或者注册页面可以直接访问，其他页面访问需要有token
+  if(to.path === '/login' || to.path === '/register') {
+    next();
+  } else {
+    if(token) {
+      next();
+    } else {
+      next('/login');
+    }
+  }
+});
+
 export default router;
