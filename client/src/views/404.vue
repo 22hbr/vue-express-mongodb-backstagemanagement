@@ -3,11 +3,7 @@
     <img src="../assets/404.png" alt="">
   </div>
 </template>
-<script>
-export default {
-  name: 'NotFound',
-  components: {}
-}
+<script setup>
 </script>
 <style scoped>
 .NotFound {

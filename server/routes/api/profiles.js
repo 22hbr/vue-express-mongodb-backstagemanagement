@@ -13,7 +13,10 @@ router.get('/test', (req, res) => {
 // 查询全部资金流水接口
 router.get('/search', passport.authenticate("jwt", { session: false }), (req, res) => {
   Profile.find().then((profiles) => {
-    res.json(profiles);
+    res.json({
+      code: 1,
+      data: profiles
+    });
   }).catch((err) => {
     console.log(err);
   });
@@ -22,7 +25,10 @@ router.get('/search', passport.authenticate("jwt", { session: false }), (req, re
 // 查询单个资金流水接口
 router.get('/search/:id', passport.authenticate("jwt", { session: false }), (req, res) => {
   Profile.findOne({ _id: req.params.id }).then((profile) => {
-    res.json(profile);
+    res.json({
+      code: 1,
+      data: profile
+    });
   }).catch((err) => {
     console.log(err);
   });
@@ -39,7 +45,10 @@ router.post('/add', passport.authenticate("jwt", { session: false }), (req, res)
   if (req.body.remark) { profileFields.remark = req.body.remark };
 
   new Profile(profileFields).save().then(profile => {
-    res.json(profile);
+    res.json({
+      code: 1,
+      data: profile
+    });
   }).catch(err => {
     console.log(err);
   });
@@ -61,7 +70,10 @@ router.post('/update/:id', passport.authenticate("jwt", { session: false }), (re
     { $set: profileFields },
     { new: true }
   ).then((profile) => {
-    res.json(profile);
+    res.json({
+      code: 1,
+      data: profile
+    });
   }).catch((err) => {
     console.log(err);
   });
@@ -74,9 +86,15 @@ router.delete('/delete/:id', passport.authenticate("jwt", { session: false }), (
     { _id: req.params.id }
   ).then((profile) => {
     if (!profile) {
-      return res.status(404).json({msg:"当前流水不存在"});
+      return res.status(404).json({
+        code: 0,
+        msg: "当前流水不存在"
+      });
     }
-    res.json(profile);
+    res.json({
+      code: 1,
+      data: profile
+    });
   }).catch((err) => {
     console.log(err);
   });

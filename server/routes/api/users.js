@@ -12,9 +12,9 @@ const router = express.Router();
 router.get('/test', passport.authenticate("jwt", { session: false }), (req, res) => {
   res.json({
     id: req.user._id,
-    name: req.user.name,
+    username: req.user.username,
     email: req.user.email,
-    identity:req.user.identity
+    identity: req.user.identity
   });
 });
 
@@ -23,12 +23,14 @@ router.post('/register', (req, res) => {
   // 查找邮箱是否被注册
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
-      return res.status(400).json({ msg: "邮箱已被占用" });
+      return res.status(400).json({ 
+        code: 0,
+        msg: "邮箱已被占用" });
     } else {
       // 注册新账号
       const avatar = gravatar.url(req.body.email, { s: '200', r: 'pg', d: 'mm' });
       const newUser = new User({
-        name: req.body.name,
+        username: req.body.username,
         password: req.body.password,
         email: req.body.email,
         avatar: avatar,
@@ -43,7 +45,10 @@ router.post('/register', (req, res) => {
           newUser.password = hash;
           // 存储到数据库
           newUser.save().then((user) => {
-            res.json(user);
+            res.json({
+              code: 1,
+              data: user
+            });
           }).catch((err) => {
             console.log(err);
           })
@@ -60,7 +65,10 @@ router.post('/login', (req, res) => {
   const { password, email } = req.body;
   User.findOne({ email }).then((user) => {
     if (!user) {
-      return res.status(404).json({ msg: '当前用户不存在' });
+      return res.status(404).json({ 
+        code: 0,
+        msg: '当前用户不存在'
+       });
     } else {
       // 密码匹配
       bcrypt.compare(password, user.password).then((isMatched) => {
@@ -69,7 +77,7 @@ router.post('/login', (req, res) => {
           // 返回token
           const rule = {
             id: user.id,
-            name: user.name,
+            username: user.username,
             avatar: user.avatar,
             identity: user.identity
           };
@@ -78,13 +86,16 @@ router.post('/login', (req, res) => {
               throw err;
             } else {
               res.json({
+                code:1,
                 success: true,
                 token: 'Bearer ' + token
               });
             }
           });
         } else {
-          return res.status(400).json({ msg: "密码错误" });
+          return res.status(400).json({ 
+            code: 0,
+            msg: "密码错误" });
         }
       }).catch((err) => {
         console.log(err);
