@@ -2,6 +2,7 @@
   <div class="index-view">
     <HeadNav />
     <Menu />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -14,8 +15,8 @@
 .index-view {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  background-image: url("../assets/background1.jpeg");
-  background-size: cover;
+  /* overflow: hidden; */
+  /* background-image: url("../assets/background1.jpeg"); */
+  /* background-size: cover; */
 }
 </style>

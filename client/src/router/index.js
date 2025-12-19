@@ -3,6 +3,8 @@ import Index from "../views/Index.vue";
 import Register from "../views/Register.vue";
 import NotFound from "../views/404.vue";
 import Login from "../views/Login.vue";
+import Home from '@/views/Home.vue';
+import UserInfo from '@/views/UserInfo.vue';
 
 const routes = [
   {
@@ -12,7 +14,13 @@ const routes = [
   {
     path:'/index',
     name:'index',
-    component:Index
+    component:Index,
+    // ?children不能写name否则无法跳转
+    children:[
+      {path:'',component:Home},
+      {path:'/home',component:Home},
+      {path:'/userInfo',component:UserInfo}
+    ]
   },
   {
     path:'/register',

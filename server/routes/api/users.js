@@ -78,6 +78,7 @@ router.post('/login', (req, res) => {
           const rule = {
             id: user.id,
             username: user.username,
+            email: user.email,
             avatar: user.avatar,
             identity: user.identity
           };
