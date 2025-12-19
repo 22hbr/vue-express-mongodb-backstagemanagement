@@ -1,6 +1,5 @@
 <template>
   <div class="index-view">
-    <!-- <p>这是初始页面</p> -->
     <HeadNav />
     <Menu />
   </div>

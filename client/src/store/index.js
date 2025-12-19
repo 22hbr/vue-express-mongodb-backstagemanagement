@@ -35,6 +35,10 @@ const actions = {
   },
   setUserInfo({ commit }, userInfo) {
     commit(types.SET_USER_INFO, userInfo);
+  },
+  clearUserInfo({ commit }) {
+    commit(types.SET_USER_INFO, {});
+    commit(types.SET_AUTHENTICATED, false);
   }
 };
 
