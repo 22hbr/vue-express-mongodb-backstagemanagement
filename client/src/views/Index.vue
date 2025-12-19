@@ -1,8 +1,22 @@
 <template>
-  <div>
-    <p>这是初始页面</p>
+  <div class="index-view">
+    <!-- <p>这是初始页面</p> -->
+    <HeadNav />
+    <Menu />
   </div>
 </template>
 
 <script setup>
+  import HeadNav from '@/components/HeadNav.vue';
+  import Menu from '@/components/Menu.vue';
 </script>
+
+<style scoped>
+.index-view {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url("../assets/background1.jpeg");
+  background-size: cover;
+}
+</style>

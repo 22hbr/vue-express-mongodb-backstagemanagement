@@ -25,6 +25,8 @@ import { ElMessage } from 'element-plus';
 import { loginApi } from '@/api/api';
 //  searchAllProfiles, getProfileById, addProfile, updateProfile, deleteProfile
 import router from '@/router/index';
+import { jwtDecode } from 'jwt-decode';
+import store from '@/store/index.js';
 
 const loginRef = ref();
 const LoginForm = ref({
@@ -42,29 +44,6 @@ const rules = ref({
   ]
 });
 
-// const register = async () => {
-//   try {
-//     await registerRef.value.validate();
-//     const params = {
-//       username: registerForm.value.username,
-//       email: registerForm.value.email,
-//       password: registerForm.value.password,
-//       identity: registerForm.value.identity
-//     };
-//     const res = await registerApi(params);
-//     console.log(res,'----------------');
-//     if (res.data.code == 1) {
-//       ElMessage.success('注册成功');
-//       router.push('/login');
-//     } else {
-//       // ElMessage.error(res.msg);
-//       ElMessage.error(res.response.data.msg || '注册失败');
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   };
-// };
-
 const loginConfirm = async () => {
   try {
     await loginRef.value.validate();
@@ -77,6 +56,11 @@ const loginConfirm = async () => {
       ElMessage.success('登录成功');
       // 存储token到本地存储
       localStorage.setItem('token', res.data.token);
+      // 解析token
+      const userInfo = jwtDecode(res.data.token);
+      // 更新Vuex状态
+      store.dispatch('setAuthenticated', !isEmpty(userInfo));
+      store.dispatch('setUserInfo', userInfo);
       router.push('/');
     } else {
       ElMessage.error(res.response.data.msg || '登录失败');
@@ -84,6 +68,12 @@ const loginConfirm = async () => {
   } catch (error) {
     console.log(error);
   };
+};
+
+const isEmpty = (value) => {
+  return value === undefined || value === null ||
+    (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) ||
+    (typeof value === 'string' && value.trim().length === 0);
 };
 
 const gotoRegister = () => {
@@ -94,6 +84,7 @@ const gotoRegister = () => {
 <style scoped>
 .register {
   background-image: url("../assets/background2.jpg");
+  background-size: cover;
   width: 100%;
   height: 100%;
 
