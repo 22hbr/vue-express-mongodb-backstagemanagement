@@ -1,6 +1,7 @@
 <template>
   <div class="userInfo">
     <!-- <img :src="userInfo.avatar"/> -->
+    <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" alt="喵呜">
     <el-form label-position="left" label-width="80px">
       <el-form-item label="用户名">
         <el-input v-model="userInfo.username" disabled></el-input>
@@ -19,7 +20,7 @@ import store from '@/store';
 import { onMounted } from 'vue';
 const userInfo = store.state.userInfo;
 onMounted(() => {
-  console.log("用户信息：",userInfo);
+  console.log("用户信息：", userInfo);
 });
 
 </script>
@@ -33,5 +34,12 @@ onMounted(() => {
   flex-direction: column;
   font-size: 30px;
   font-weight: bold;
+
+  img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    padding-left: 80px;
+  }
 }
 </style>

@@ -5,6 +5,7 @@ import NotFound from "../views/404.vue";
 import Login from "../views/Login.vue";
 import Home from '@/views/Home.vue';
 import UserInfo from '@/views/UserInfo.vue';
+import FundList from '@/views/FundList.vue';
 
 const routes = [
   {
@@ -19,6 +20,7 @@ const routes = [
     children:[
       {path:'',component:Home},
       {path:'/home',component:Home},
+      {path:'/fundList',component:FundList},
       {path:'/userInfo',component:UserInfo}
     ]
   },
