@@ -8,12 +8,12 @@ export const loginApi = (data) => {
   return axios.post('/api/users/login', data);
 };
 // 查询所有资金流水接口
-export const searchAllProfiles = () => {
-  return axios.get('/api/profiles/search');
+export const searchAllProfiles = (data) => {
+  return axios.get('/api/profiles/search',{ params: data });
 };
 // 根据ID查询单个资金流水接口
-export const getProfileById = (id) => {
-  return axios.get(`/api/profiles/search/${id}`);
+export const getProfileById = (id,data) => {
+  return axios.get(`/api/profiles/search/${id}`,data);
 };
 // 新增资金流水接口
 export const addProfile = (data) => {

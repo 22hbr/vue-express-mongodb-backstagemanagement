@@ -1,3 +1,4 @@
+// vue.config.js
 const path = require('path');
 const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV);
 const resolve = (dir) => path.join(__dirname, dir);
@@ -28,8 +29,8 @@ module.exports = {
   devServer: {
     client: {
       overlay: {
-        warnings: true,
-        errors: true
+        warnings: false,
+        errors: false
       }
     },
     host: "localhost",

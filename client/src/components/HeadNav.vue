@@ -28,7 +28,8 @@ import router from "@/router";
 import { ElMessage } from "element-plus";
 import store from "@/store";
 
-const avatarUrl = store.state.userInfo.avatar;
+// const avatarUrl = store.state.userInfo.avatar;
+const avatarUrl = "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
 const username = store.state.userInfo.username;
 
 const handlePersonalInfo = () =>{
