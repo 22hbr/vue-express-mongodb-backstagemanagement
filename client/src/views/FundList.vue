@@ -2,8 +2,8 @@
   <div class="fundList">
     <div class="searchForm">
       时间筛选: <el-date-picker v-model="selectedTime" type="datetimerange" start-placeholder="开始时间" end-placeholder="结束时间"
-        format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd" time-format="A hh:mm:ss" style="width: 260px;flex: none;"
-11/>
+        format="YYYY-MM-DD HH:mm:ss" date-format="YYYY/MM/DD ddd" time-format="A hh:mm:ss"
+        style="width: 260px;flex: none;" 11 />
       <el-button type="primary" @click="search" style="margin-left: 10px;">搜索</el-button>
       <el-button type="primary" @click="reset">重置</el-button>
 
@@ -14,14 +14,26 @@
         <el-table-column sortable fixed width="180" prop="date" label="创建时间" />
         <el-table-column prop="type" label="收支类型" />
         <el-table-column prop="description" label="收支描述" />
-        <el-table-column prop="income" label="收入" />
-        <el-table-column prop="expend" label="支出" />
-        <el-table-column prop="cash" label="账户" />
+        <el-table-column prop="income" label="收入">
+          <template #default="{ row }">
+            <span style="color: green;">+{{ row.income }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="expend" label="支出">
+          <template #default="{ row }">
+            <span style="color: red;">-{{ row.expend }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="cash" label="账户">
+          <template #default="{ row }">
+            <span style="color: blue;">{{ row.cash }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="remark" label="备注" />
         <el-table-column label="操作" fixed="right" min-width="120">
           <template #default="{ row }">
             <el-button type="primary" size="small" @click="updateFund(row)">编辑</el-button>
-            <el-button type="primary" size="small" @click="deleteFund(row)">
+            <el-button type="danger" size="small" @click="deleteFund(row)">
               删除
             </el-button>
           </template>
@@ -37,11 +49,11 @@
   </div>
   <el-dialog v-model="dialogVisible" :title="title" width="400">
     <el-form label-width="100px" label-position="left">
-      <!-- <el-form-item label="创建时间" required prop="date">
-        <el-input v-model="fundForm.date" disabled placeholder="请输入创建时间" />
-      </el-form-item> -->
       <el-form-item label="收支类型" required>
-        <el-input v-model="fundForm.type" placeholder="请输入收支类型" />
+        <el-select v-model="fundForm.type" placeholder="请选择收支类型">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="收支描述" required>
         <el-input type="textarea" v-model="fundForm.description" placeholder="请输入收支描述" />
@@ -81,7 +93,6 @@ const total = ref(0);
 const dialogVisible = ref(false);
 let title = ref("");
 const fundForm = ref({
-  // time: '',
   type: '',
   description: '',
   income: null,
@@ -89,7 +100,13 @@ const fundForm = ref({
   cash: '',
   remark: ''
 });
-
+const options = [
+  { value: '工资', label: '工资' },
+  { value: '投资', label: '投资' },
+  { value: '生活', label: '生活' },
+  { value: '娱乐', label: '娱乐' },
+  { value: '其他', label: '其他' }
+];
 const userId = ref();
 
 onMounted(() => {
@@ -105,7 +122,7 @@ const fetchData = async () => {
   }
   const result = await searchAllProfiles(params);
   if (result.data.code == 1) {
-    console.log(result.data.data,'allData.');
+    console.log(result.data.data, 'allData.');
     tableData.value = result.data.data;
     total.value = result.data.total;
   } else {
