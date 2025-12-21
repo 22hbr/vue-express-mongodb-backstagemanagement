@@ -71,7 +71,7 @@ router.get('/search', passport.authenticate("jwt", { session: false }), (req, re
 
   // 并行执行：查总数 + 查当前页数据
   Promise.all([
-    Profile.countDocuments(query), // 总记录数
+    Profile.countDocuments(query), // 总记录数，只根据查询条件来，skip和limit不影响总数
     Profile.find(query)
       .skip((pageNumInt - 1) * pageSizeInt)
       .limit(pageSizeInt)
@@ -87,7 +87,7 @@ router.get('/search', passport.authenticate("jwt", { session: false }), (req, re
       res.json({
         code: 1,
         data: formattedProfiles,
-        total, // ✅ 这是真实的总条数，不受 pageSize 影响
+        total, 
         pageNum: pageNumInt,
         pageSize: pageSizeInt,
         totalPages: Math.ceil(total / pageSizeInt)

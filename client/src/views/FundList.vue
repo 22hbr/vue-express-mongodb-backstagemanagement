@@ -31,7 +31,7 @@
     <div class="pagination">
       <!-- total, sizes, prev, pager, next, jumper -->
       <el-pagination background v-model:current-page="currentPage" v-model:page-size="pageSize"
-        :page-sizes="[5,10, 20, 50, 100]" layout="prev, pager, next,total,sizes, " :total="total"
+        :page-sizes="[10, 20, 50, 100]" layout="prev, pager, next,total,sizes, " :total="total"
         @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
   </div>
@@ -126,6 +126,7 @@ const reset = () => {
     startTime: '',
     endTime: ''
   };
+  fetchData();
 };
 
 const addFund = async () => {
@@ -218,7 +219,7 @@ const cancel = () => {
 
 const handleSizeChange = (newSize) => {
   pageSize.value = newSize;
-  // currentPage.value = 1;
+  currentPage.value = 1;
   fetchData();
 };
 
