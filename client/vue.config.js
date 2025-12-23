@@ -28,10 +28,7 @@ module.exports = {
   },
   devServer: {
     client: {
-      overlay: {
-        warnings: false,
-        errors: false
-      }
+      overlay: false
     },
     host: "localhost",
     port: 8080,

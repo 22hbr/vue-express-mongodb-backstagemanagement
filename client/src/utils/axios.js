@@ -36,7 +36,8 @@ axios.interceptors.request.use((config => {
 axios.interceptors.response.use((response => {
   // 结束加载动画
   endLoading();
-  return response;
+  // return response;
+  return response.data;
 }), (error => {
   // 结束加载动画
   endLoading();

@@ -84,12 +84,11 @@ const register = async () => {
       identity: registerForm.value.identity
     };
     const res = await registerApi(params);
-    if (res.data.code == 1) {
+    if (res.code == 1) {
       ElMessage.success('注册成功');
       router.push('/login');
     } else {
-      // ElMessage.error(res.msg);
-      ElMessage.error(res.response.data.msg || '注册失败');
+      ElMessage.error(res.msg || '注册失败');
     }
   } catch (error) {
     console.log(error);

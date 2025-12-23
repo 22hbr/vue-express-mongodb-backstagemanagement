@@ -23,7 +23,6 @@
 import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { loginApi } from '@/api/api';
-//  searchAllProfiles, getProfileById, addProfile, updateProfile, deleteProfile
 import router from '@/router/index';
 import { jwtDecode } from 'jwt-decode';
 import store from '@/store/index.js';
@@ -52,18 +51,18 @@ const loginConfirm = async () => {
       password: LoginForm.value.password
     };
     const res = await loginApi(params);
-    if (res.data.code == 1) {
+    if (res.code == 1) {
       ElMessage.success('登录成功');
       // 存储token到本地存储
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('token', res.token);
       // 解析token
-      const userInfo = jwtDecode(res.data.token);
+      const userInfo = jwtDecode(res.token);
       // 更新Vuex状态
       store.dispatch('setAuthenticated', !isEmpty(userInfo));
       store.dispatch('setUserInfo', userInfo);
       router.push('/');
     } else {
-      ElMessage.error(res.response.data.msg || '登录失败');
+      ElMessage.error(res.msg||'登录失败');
     }
   } catch (error) {
     console.log(error);

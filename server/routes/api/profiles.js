@@ -3,13 +3,6 @@ const Profile = require("../../models/Profile");
 const passport = require("passport");
 const router = express.Router();
 
-// 权限测试接口-token
-router.get('/test', (req, res) => {
-  res.json({
-    msg: "profiles test"
-  });
-});
-
 const formatToLocalTime = (isoStr) => {
   const d = new Date(isoStr);
   const year = d.getFullYear();
@@ -20,41 +13,6 @@ const formatToLocalTime = (isoStr) => {
   const seconds = String(d.getSeconds()).padStart(2, '0');
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
-
-// // 查询全部资金流水接口
-// router.get('/search', passport.authenticate("jwt", { session: false }), (req, res) => {
-//   const { startDate, endDate, pageNum = 1, pageSize = 10 } = req.query;
-//   const query = {};
-//   if (startDate && endDate) {
-//     query.date = {
-//       $gte: new Date(startDate),
-//       $lte: new Date(endDate)
-//     };
-//   }
-//   const pageNumInt = parseInt(pageNum);
-//   const pageSizeInt = parseInt(pageSize);
-
-
-//   Profile
-//     .find(query)
-//     .skip((pageNumInt - 1) * pageSizeInt)
-//     .limit(pageSizeInt)
-//     .lean()
-//     .then((profiles) => {
-//       profiles.forEach(profile => {
-//         profile.date = formatToLocalTime(profile.date);
-//       });
-//       res.json({
-//         code: 1,
-//         data: profiles,
-//         total:profiles.length
-//       });
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).json({ code: 0, msg: '查询失败' });
-//     });
-// });
 
 // 查询全部资金流水接口（包含总数）
 router.get('/search', passport.authenticate("jwt", { session: false }), (req, res) => {

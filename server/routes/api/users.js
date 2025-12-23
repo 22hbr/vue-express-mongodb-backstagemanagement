@@ -8,22 +8,12 @@ const passport = require("passport");
 
 const router = express.Router();
 
-// 权限测试接口-token
-router.get('/test', passport.authenticate("jwt", { session: false }), (req, res) => {
-  res.json({
-    id: req.user._id,
-    username: req.user.username,
-    email: req.user.email,
-    identity: req.user.identity
-  });
-});
-
 // 注册接口
 router.post('/register', (req, res) => {
   // 查找邮箱是否被注册
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
-      return res.status(400).json({ 
+      return res.json({ 
         code: 0,
         msg: "邮箱已被占用" });
     } else {
@@ -65,7 +55,7 @@ router.post('/login', (req, res) => {
   const { password, email } = req.body;
   User.findOne({ email }).then((user) => {
     if (!user) {
-      return res.status(404).json({ 
+      return res.json({ 
         code: 0,
         msg: '当前用户不存在'
        });
@@ -73,7 +63,6 @@ router.post('/login', (req, res) => {
       // 密码匹配
       bcrypt.compare(password, user.password).then((isMatched) => {
         if (isMatched) {
-          // return res.status(200).json(user);
           // 返回token
           const rule = {
             id: user.id,
@@ -94,7 +83,7 @@ router.post('/login', (req, res) => {
             }
           });
         } else {
-          return res.status(400).json({ 
+          return res.json({ 
             code: 0,
             msg: "密码错误" });
         }

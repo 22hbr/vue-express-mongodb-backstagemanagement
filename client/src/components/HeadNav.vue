@@ -9,8 +9,6 @@
         <el-avatar :size="40" :src="avatarUrl" />
         <el-dropdown>
           <span>{{username }}</span>
-          <!-- <el-icon><ArrowDown /></el-icon> -->
-           <!-- <el-icon class="el-icon--right"><ArrowDown /></el-icon> -->
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="handlePersonalInfo">个人信息</el-dropdown-item>

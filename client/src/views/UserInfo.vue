@@ -17,11 +17,7 @@
 </template>
 <script setup>
 import store from '@/store';
-import { onMounted } from 'vue';
 const userInfo = store.state.userInfo;
-onMounted(() => {
-  console.log("用户信息：", userInfo);
-});
 
 </script>
 <style scoped>

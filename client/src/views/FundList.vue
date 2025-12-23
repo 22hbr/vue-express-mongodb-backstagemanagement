@@ -41,7 +41,6 @@
       </el-table>
     </div>
     <div class="pagination">
-      <!-- total, sizes, prev, pager, next, jumper -->
       <el-pagination background v-model:current-page="currentPage" v-model:page-size="pageSize"
         :page-sizes="[10, 20, 50, 100]" layout="prev, pager, next,total,sizes, " :total="total"
         @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -121,10 +120,9 @@ const fetchData = async () => {
     pageSize: pageSize.value
   }
   const result = await searchAllProfiles(params);
-  if (result.data.code == 1) {
-    console.log(result.data.data, 'allData.');
-    tableData.value = result.data.data;
-    total.value = result.data.total;
+  if (result.code == 1) {
+    tableData.value = result.data;
+    total.value = result.total;
   } else {
     tableData.value = [];
     total.value = 0;
@@ -156,7 +154,7 @@ const updateFund = async (row) => {
   title.value = "编辑收支记录";
   userId.value = row._id;
   const userIfon = await getProfileById(userId.value);
-  fundForm.value = userIfon.data.data;
+  fundForm.value = userIfon.data;
 };
 
 const deleteFund = async (row) => {
@@ -171,7 +169,7 @@ const deleteFund = async (row) => {
   )
     .then(async () => {
       const res = await deleteProfile(row._id);
-      if (res.data.code == 1) {
+      if (res.code == 1) {
         fetchData();
         ElMessage.success('删除成功');
       } else {
@@ -201,7 +199,7 @@ const onSubmit = async () => {
   }
   if (title.value == '添加收支记录') {
     const result = await addProfile(fundForm.value);
-    if (result.data.code == 1) {
+    if (result.code == 1) {
       fetchData();
       ElMessage.success('添加成功');
       dialogVisible.value = false;
@@ -210,7 +208,7 @@ const onSubmit = async () => {
     };
   } else if (title.value == '编辑收支记录') {
     const result = await updateProfile(userId.value, fundForm.value);
-    if (result.data.code == 1) {
+    if (result.code == 1) {
       fetchData();
       ElMessage.success('更新成功');
       dialogVisible.value = false;

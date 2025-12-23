@@ -20,7 +20,7 @@ import Menu from '@/components/Menu.vue';
 
   .content {
     display: flex;
-    width: 100%;
+    /* width: 100%; */
     height: calc(100% - 60px);
   }
 }

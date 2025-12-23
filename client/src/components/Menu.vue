@@ -1,6 +1,5 @@
 <template>
   <div class="menu">
-    <!-- rgba(32, 106, 225, 0.5) -->
     <el-menu background-color="rgb(143,180,240)" active-text-color="#ffd04b" @open="handleOpen" @close="handleClose"
       @select="handleMenuSelect">
       <el-menu-item index="/home">
